@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head lang="en">
+<title>Add gate - AirportGate</title>
+<th:block th:include="fragments/head :: head"></th:block>
+</head>
+<body>
+	<div class="container">
+		<th:block th:include="fragments/header :: header"></th:block>
+		<form th:action="@{/gates/add}" method="post" th:object="${gate}">
+			<input type="hidden" th:field="*{id}" />
+			<div class="panel panel-default">
+				<div class="panel-heading lead">Add gate</div>
+				<fieldset>
+					<div class="col-lg-12" th:if="${message != null}">
+						<div class="alert alert-success" th:text="${message}"></div>
+					</div>
+					<div class="col-lg-12" th:if="${#fields.hasGlobalErrors()}">
+						<div class="alert alert-danger" th:each="err : ${#fields.globalErrors()}" th:text="${err}">...</div>
+					</div>
+
+					<div class="col-lg-12 form-group" th:classappend="${#fields.hasErrors('gateName')} ? 'has-error'">
+						<label class="col-lg-2 control-label" for="gateName">Gate name</label>
+						<div class="col-lg-4">
+							<input type="text" id="gateName" class="form-control" th:field="*{gateName}" /> <small class="help-block"
+								th:if="${#fields.hasErrors('gateName')}" th:errors="*{gateName}"></small>
+						</div>
+					</div>
+
+					<div class="col-lg-12 form-group" th:classappend="${#fields.hasErrors('gateOpened')} ? 'has-error'">
+						<label class="col-lg-2 control-label" for="gateOpened">Gate opened</label>
+						<div class="col-lg-4">
+							<input type="datetime" id="gateOpened" class="form-control" th:field="*{gateOpened}" /> <small
+								class="help-block" th:if="${#fields.hasErrors('gateOpened')}" th:errors="*{gateOpened}"></small>
+						</div>
+					</div>
+
+					<div class="col-lg-12 form-group" th:classappend="${#fields.hasErrors('gateClosed')} ? 'has-error'">
+						<label class="col-lg-2 control-label" for="gateClosed">Gate closed</label>
+						<div class="col-lg-4">
+							<input type="datetime" id="gateClosed" class="form-control" th:field="*{gateClosed}" /> <small
+								class="help-block" th:if="${#fields.hasErrors('gateClosed')}" th:errors="*{gateClosed}"></small>
+						</div>
+					</div>
+
+					<div class="col-lg-12 form-group">
+						<label class="col-lg-2">Gate status</label>
+						<div class="col-lg-4">
+							<select class="form-control" th:field="*{gateStatusList}">
+								<option th:value="NULL">---Select Status---</option>
+								<option th:each="gatestatus : ${gatestatuses}" th:value="${{gatestatus}}" th:text="${gatestatus.gateStatusName}"></option>
+							</select>
+						</div>
+					</div>
+
+					<div class="col-lg-12 form-group">
+						<label class="col-lg-2"></label>
+						<div class="col-lg-4">
+							<button type="submit" class="btn btn-primary">Submit</button>
+							<a class="btn btn-default" th:href="@{/gates}">Cancel</a>
+						</div>
+					</div>
+				</fieldset>
+			</div>
+		</form>
+	</div>
+</body>
+</html>

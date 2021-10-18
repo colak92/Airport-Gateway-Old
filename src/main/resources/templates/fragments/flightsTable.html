@@ -1,0 +1,46 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+      xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+  <body>
+    <div th:fragment="flightsTable">
+      <div class="panel panel-default">
+        <div class="panel-heading">
+          <a sec:authorize="hasRole('ROLE_ADMIN')" th:href="@{/flights/add}" class="btn btn-success pull-right">
+            <i class="glyphicon glyphicon-plus"></i>
+          </a>
+          <span class="lead">List of Flights</span>
+        </div>
+        <div class="panel-body" th:if="${#lists.isEmpty(flights)}">
+          <div class="alert alert-warning" style="margin-bottom: 0">No flights found.</div>
+        </div>
+        <table class="table table-hover" th:if="${!#lists.isEmpty(flights)}">
+          <thead>
+            <tr>
+              <th width="70">ID</th>
+              <th>Number</th>
+              <th>Gate</th>
+              <th>Gate status</th>
+              <th sec:authorize="hasRole('ROLE_ADMIN')" width="120"></th>
+            </tr>
+          </thead>
+          <tbody>
+            <tr th:each="flight : ${flights}">
+              <td th:text="${flight.id}">ID</td>
+              <td th:text="${flight.flightNumber}">Number</td>
+              <td th:text="${flight.gate.gateName}">Gate</td>
+              <td th:text="${flight.gate.gateStatus.gateStatusName}">Gate status</td>
+              <td sec:authorize="hasRole('ROLE_ADMIN')">
+                <a th:href="@{/flights/edit/{id}(id=${flight.id})}" class="btn btn-primary btn-sm" title="Edit">
+                  <i class="glyphicon glyphicon-pencil"></i>
+                </a>
+                <a th:href="@{/flights/delete/{id}(id=${flight.id})}" class="btn btn-danger btn-sm" title="Delete">
+                  <i class="glyphicon glyphicon-trash"></i>
+                </a>
+              </td>
+            </tr>
+          </tbody>
+        </table>
+      </div>
+    </div>
+  </body>
+</html>

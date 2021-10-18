@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head lang="en">
+<title>Gate result - AirportGate</title>
+<th:block th:include="fragments/head :: head"></th:block>
+</head>
+<body>
+	<div class="container">
+		<th:block th:include="fragments/header :: header"></th:block>
+		<div class="container-fluid">
+
+			<div>
+				<h2>Search results</h2>
+				<br />
+			</div>
+
+			<div class="panel-body" th:if="${#lists.isEmpty(searchResult)}">
+				<div class="alert alert-warning" style="margin-bottom: 0">No gates found.</div>
+			</div>
+			<table class="table table-hover" th:if="${!#lists.isEmpty(searchResult)}">
+				<thead>
+					<tr>
+						<th width="70">ID</th>
+						<th>Name</th>
+						<th>Opened</th>
+						<th>Closed</th>
+						<th>Status</th>
+						<th sec:authorize="hasRole('ROLE_ADMIN')" width="120"></th>
+					</tr>
+				</thead>
+				<tbody>
+					<tr th:each="gate : ${searchResult}">
+						<td th:text="${gate.id}">ID</td>
+						<td th:text="${gate.gateName}">Number</td>
+						<td th:text="${gate.gateOpened}">Opened</td>
+						<td th:text="${gate.gateClosed}">Closed</td>
+						<td th:text="${gate.gateStatus.gateStatusName}">Status</td>
+						<td sec:authorize="hasRole('ROLE_ADMIN')">
+							<a th:href="@{/gates/edit/{id}(id=${gate.id})}" class="btn btn-primary btn-sm" title="Edit"> 
+								<i class="glyphicon glyphicon-pencil"></i>
+							</a> 
+							<a th:href="@{/gates/delete/{id}(id=${gate.id})}" class="btn btn-danger btn-sm" title="Delete"> 
+								<i class="glyphicon glyphicon-trash"></i>
+							</a>
+						</td>
+					</tr>
+				</tbody>
+			</table>
+
+		</div>
+	</div>
+</body>
+
+</html>

@@ -1,0 +1,21 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+	<div th:fragment="searchFlightNav" class="row">
+		<div class="col">
+			<nav class="navbar navbar-expand-sm bg-light">
+				<div class="collapse navbar-collapse" id="searchFlightNavbar">
+				
+					<form class="form-inline my-2 my-lg-0" th:action="@{/flights/search}" method="get">
+						<input type="search" name="keyword" size="20" th:value="${keyword}" class="form-control mr-sm-2" placeholder="keyword"/>
+						<input type="search" name="opened" size="20" th:value="${opened}" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" />
+						<input type="search" name="closed" size="20" th:value="${closed}" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" />
+						<input type="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0" />
+					</form>
+					
+				</div>
+			</nav>
+		</div>
+	</div>
+</body>
+</html>

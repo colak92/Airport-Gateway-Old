@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<body>
+	<div th:fragment="searchGateNav" class="row">
+		<div class="col">
+			<nav class="navbar navbar-expand-sm bg-light">
+				<div class="collapse navbar-collapse" id="searchGateNavbar">
+				
+					<form class="form-inline my-2 my-lg-0" th:action="@{/gates/search}" method="get">
+						<input type="search" name="opened" th:value="${opened}" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" required="required"/>
+						<input type="search" name="closed" th:value="${closed}" class="form-control" placeholder="yyyy-MM-dd HH:mm:ss" required="required"/>
+						<input type="submit" value="Search" class="btn btn-outline-success my-2 my-sm-0" />
+					</form>
+					
+				</div>
+			</nav>
+		</div>
+	</div>
+</body>
+</html>
